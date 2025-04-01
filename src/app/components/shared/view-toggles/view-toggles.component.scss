@@ -1,0 +1,29 @@
+.view-toggles {
+  display: flex;
+  
+  .view-toggle {
+    padding: 6px 16px;
+    border: 1px solid #d9d9d9;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    color: #B1B1B1;
+
+    
+    &:first-child {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+    
+    &:last-child {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    
+    &.active {
+      background-color: #EEF3FA;
+      border-color: #2694FC;
+      color: #2694FC;
+    }
+  }
+}

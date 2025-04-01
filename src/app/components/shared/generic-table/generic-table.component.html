@@ -1,0 +1,70 @@
+<div class="table-container divisions-table">
+  <nz-table
+    #basicTable
+    [nzData]="data"
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzShowPagination]="showPagination"
+    [nzPageSizeOptions]="[10, 20, 50, 100]"
+    [nzShowSizeChanger]="true"
+    [nzShowQuickJumper]="false"
+    (nzPageIndexChange)="onPageIndexChange($event)"
+    (nzPageSizeChange)="onPageSizeChange($event)"
+    nzBordered>
+    
+    <thead>
+      <tr>
+        <th nzWidth="40px">
+          <label nz-checkbox></label>
+        </th>
+        <th *ngFor="let column of columns" 
+          [nzShowSort]="column.sortable"
+          [nzShowFilter]="column.filterable"
+          [nzSortOrder]="column.sortable ? (column.sortOrder || null) : null"
+          [nzSortFn]="column.sortable ? (column.sortFn || sortFn) : null"
+          [nzFilters]="column.filterable ? (column.filters || defaultFilters) : []"
+          [nzFilterFn]="column.filterable ? (column.filterFn || defaultFilterFn) : null"
+          (nzSortOrderChange)="column.sortable ? onSortChange(column.key, $event) : null"
+          (nzFilterChange)="column.filterable ? onFilterChange(column.key, $event) : null">
+        {{ column.title }}
+      </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td [nzChecked]="setOfCheckedId.has(item.id)" (nzCheckedChange)="onItemChecked(item.id, $event)"></td>
+        <td class="division-name-cell">
+          <div class="name-with-actions">
+            <span class="division-name">{{ item.name }}</span>
+            <div class="actions-container">
+              <button nz-button nzType="text" nzTooltip="Editar" (click)="onEdit.emit(item); $event.stopPropagation()">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+              <button nz-button nzType="text" nzTooltip="Eliminar" nzDanger (click)="onDelete.emit(item.id); $event.stopPropagation()">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td>{{ item.parent }}</td>
+        <td>{{ item.collaboratorsCount }}</td>
+        <td>{{ item.level }}</td>
+        <td class="add-subdivision">
+          <span class="division-number">{{ item.subdivisions }}</span>
+          <button nz-button nzType="text" class="add-button">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>
+          </button>
+        </td>
+        <td>{{ item.ambassadorName || '-' }}</td>
+      </tr>
+      
+      <tr class="total-row">
+        <td></td>
+        <td colspan="2">Total colaboradores: {{ totalCollaborators }}</td>
+        <td colspan="4"></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

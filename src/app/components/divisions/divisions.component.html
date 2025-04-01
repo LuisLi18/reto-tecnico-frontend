@@ -1,0 +1,82 @@
+<div class="page-content">
+  <div class="controls-container">
+    <app-view-toggles
+      [viewMode]="selectedViewMode" 
+      (viewModeChange)="onViewModeChange($event)">
+    </app-view-toggles>
+
+    <div class="table-filters" *ngIf="selectedViewMode === 'list'">
+      <app-generic-dropdown
+        buttonText="Columnas"
+        [items]="columns"
+        displayProperty="label"
+        [showHeader]="true"
+        [showFooter]="true"
+        (apply)="applyColumnFilter($event)"
+        ngSkipHydration>
+      </app-generic-dropdown>
+
+      <div class="search-container">
+        <input type="text" placeholder="Buscar" [(ngModel)]="searchText" (ngModelChange)="search()"/>
+        <i class="search-icon" nz-icon nzType="search"></i>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedViewMode === 'list'">
+    <app-generic-table
+      [data]="divisions"
+      [columns]="[
+        { key: 'name', title: 'División', sortable: true, filterable: true, filters: [{ text: 'División 1', value: '1' }, { text: 'División 2', value: '2' }] },
+        { key: 'parent', title: 'División Superior', sortable: true, filterable: true },
+        { key: 'collaboratorsCount', title: 'Colaboradores', type: 'number', sortable: true, filterable: false },
+        { key: 'level', title: 'Nivel', type: 'number', sortable: true, filterable: true },
+        { key: 'subdivisions', title: 'Subdivisiones', type: 'number', sortable: true, filterable: false },
+        { key: 'ambassadorName', title: 'Embajadores', type: 'text', sortable: false, filterable: false },
+      ]"
+      [total]="total"
+      [pageSize]="pageSize"
+      [pageIndex]="currentPage"
+      [showPagination]="true"
+      [totalCollaborators]="totalCollaborators"
+      (pageIndexChange)="onPageIndexChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+      (onEdit)="showEditModal($event)"
+      (onDelete)="deleteDivision($event)"
+      ngSkipHydration>
+    </app-generic-table>
+  </div>
+
+  <div class="tree-container" *ngIf="selectedViewMode === 'tree'">
+    @if (divisions.length > 0) {
+      <nz-tree
+        [nzData]="getTreeData()"
+        nzBlockNode
+        nzExpandAll>
+        <ng-template #nzTreeTemplate let-node>
+          <span>
+            {{ node.title }}
+            @if (node.ambassadorName) {
+              <nz-tag [nzColor]="'blue'" style="margin-left: 8px;">
+                {{ node.ambassadorName }}
+              </nz-tag>
+            }
+          </span>
+        </ng-template>
+      </nz-tree>
+    } @else {
+      <nz-empty nzNotFoundContent="No hay divisiones para mostrar"></nz-empty>
+    }
+  </div>
+
+  <app-generic-modal
+    [isVisible]="isModalVisible"
+    [title]="editingDivision ? 'Editar División' : 'Agregar División'"
+    [fields]="modalFields"
+    [initialValues]="editingDivision"
+    [isSubmitting]="isFormSubmitting"
+    (onCancel)="handleModalCancel()"
+    (onOk)="handleModalOk()"
+    (formChange)="onFormChange($event)">
+  </app-generic-modal>
+</div>

@@ -1,0 +1,30 @@
+<div class="dropdown-container">
+  <button class="dropdown-button" nz-dropdown [nzDropdownMenu]="dropdownMenu">
+    <span class="button-text">{{ buttonText }}</span>
+    <i nz-icon nzType="down"></i>
+  </button>
+  
+  <nz-dropdown-menu #dropdownMenu="nzDropdownMenu">
+    <div class="dropdown-content">
+      <div class="dropdown-header" *ngIf="showHeader">
+        <span>{{ buttonText }}</span>
+        <a *ngIf="showRestoreOption" (click)="restore.emit()">Reiniciar</a>
+      </div>
+      
+      <nz-divider *ngIf="showHeader" nzMargin="'8px 0'"></nz-divider>
+      
+      <div class="dropdown-list">
+        <label nz-checkbox 
+          *ngFor="let item of items" 
+          [(ngModel)]="item.selected"
+          (ngModelChange)="toggleItem(item)">
+          {{ item[displayProperty] }}
+        </label>
+      </div>
+      
+      <div class="dropdown-footer" *ngIf="showFooter">
+        <button class="apply-btn" (click)="onApply()">OK</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+</div>

@@ -1,0 +1,16 @@
+<div class="view-toggles">
+  <button 
+    [class.active]="viewMode === 'list'" 
+    (click)="toggleViewMode('list')" 
+    class="view-toggle">
+    Listado
+  </button>
+  
+  <button 
+    [class.active]="viewMode === 'tree'" 
+    (click)="toggleViewMode('tree')" 
+    class="view-toggle">
+    Árbol
+  </button>
+</div>
+  

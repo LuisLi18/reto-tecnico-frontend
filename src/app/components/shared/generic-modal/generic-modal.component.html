@@ -1,0 +1,109 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="title"
+  [nzWidth]="width"
+  [nzOkText]="okText"
+  [nzCancelText]="cancelText"
+  [nzOkLoading]="isSubmitting"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="form" nzLayout="vertical">
+      <div *ngFor="let field of fields">
+        <!-- Text Input -->
+        <nz-form-item *ngIf="field.type === 'text'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control [nzErrorTip]="field.errorMessage || 'Este campo es requerido'">
+            <input nz-input [formControlName]="field.key" [placeholder]="field.placeholder || ''" [disabled]="field.disabled!"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Textarea -->
+        <nz-form-item *ngIf="field.type === 'textarea'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control [nzErrorTip]="field.errorMessage || 'Este campo es requerido'">
+            <textarea nz-input [formControlName]="field.key" [placeholder]="field.placeholder || ''" [rows]="4" [disabled]="field.disabled!"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Number Input -->
+        <nz-form-item *ngIf="field.type === 'number'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control [nzErrorTip]="field.errorMessage || 'Ingrese un número válido'">
+            <nz-input-number 
+              [formControlName]="field.key" 
+              [nzMin]="field.min" 
+              [nzMax]="field.max" 
+              [nzStep]="field.step || 1"
+              [nzPlaceHolder]="field.placeholder || ''"
+              [nzDisabled]="field.disabled"
+              style="width: 100%;">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Select Dropdown -->
+        <nz-form-item *ngIf="field.type === 'select'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control [nzErrorTip]="field.errorMessage || 'Por favor seleccione una opción'">
+            <nz-select 
+              [formControlName]="field.key" 
+              [nzPlaceHolder]="field.placeholder || 'Seleccione'" 
+              [nzAllowClear]="true"
+              [nzDisabled]="field.disabled"
+              [nzMode]="field.multiple ? 'multiple' : 'default'">
+              <nz-option 
+                *ngFor="let option of field.options" 
+                [nzValue]="option.value" 
+                [nzLabel]="option.label">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Checkbox -->
+        <nz-form-item *ngIf="field.type === 'checkbox'">
+          <nz-form-control>
+            <label nz-checkbox [formControlName]="field.key" [nzDisabled]="field.disabled">
+              {{ field.label }}
+            </label>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Date Picker -->
+        <nz-form-item *ngIf="field.type === 'date'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control [nzErrorTip]="field.errorMessage || 'Por favor seleccione una fecha'">
+            <nz-date-picker 
+              [formControlName]="field.key" 
+              [nzPlaceHolder]="field.placeholder || ''" 
+              style="width: 100%;"
+              [nzDisabled]="field.disabled">
+            </nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Radio Group -->
+        <nz-form-item *ngIf="field.type === 'radio'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control [nzErrorTip]="field.errorMessage || 'Por favor seleccione una opción'">
+            <nz-radio-group [formControlName]="field.key" [nzDisabled]="field.disabled">
+              <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">
+                {{ option.label }}
+              </label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Switch -->
+        <nz-form-item *ngIf="field.type === 'switch'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control>
+            <nz-switch [formControlName]="field.key" [nzDisabled]="field.disabled"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>

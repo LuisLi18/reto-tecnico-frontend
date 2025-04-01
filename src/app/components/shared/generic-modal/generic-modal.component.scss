@@ -1,0 +1,94 @@
+::ng-deep .ant-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; // Ajusta el tamaño si es necesario
+  max-width: 90%;
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+  animation: none !important; // Desactiva cualquier animación
+}
+
+::ng-deep .ant-modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  animation: none !important; // Desactiva la animación
+}
+
+::ng-deep .ant-modal-close {
+  display: none !important;
+}
+
+::ng-deep .ant-modal-header {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  text-align: center;
+
+  .ant-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+::ng-deep .ant-modal-body {
+  padding: 24px;
+  max-height: 65vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: #444;
+}
+
+::ng-deep .ant-modal-footer {
+  padding: 12px 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background-color: white;
+  
+  .ant-btn {
+    border-radius: 8px;
+    padding: 0px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .ant-btn-primary {
+    background-color: #3E7BFA;
+    border-color: #3E7BFA;
+    color: white;
+
+    &:hover, &:focus {
+      background-color: #2c6ef2;
+      border-color: #2c6ef2;
+    }
+  }
+
+  .ant-btn-default {
+    background-color: #f0f0f0;
+    border-color: #d9d9d9;
+    color: #333;
+
+    &:hover, &:focus {
+      background-color: #e0e0e0;
+    }
+  }
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  nz-form-item {
+    margin-bottom: 16px;
+  }
+}

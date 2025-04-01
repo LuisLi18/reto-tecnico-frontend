@@ -1,0 +1,16 @@
+<div class="organization-container">
+    <app-header></app-header>
+    <app-page-title title="Organización"></app-page-title>
+
+    <div class="actions-tabs-container">
+        <app-tabs [activeTab]="selectedTab" (tabChange)="onTabChange($event)"></app-tabs>
+        <div *ngIf="currentViewMode === 'list'">
+            <app-action-buttons 
+                (addAction)="onAddAction()" 
+                (uploadAction)="onUploadAction()" 
+                (downloadAction)="onDownloadAction()">
+            </app-action-buttons>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>
